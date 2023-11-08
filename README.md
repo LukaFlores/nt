@@ -1,13 +1,6 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
 
-
-<!-- PROJECT LOG
-
-
-
-O -->
-
 <div>
   <h2 align="center">nt</h2>
   
@@ -17,9 +10,9 @@ O -->
     
   <p align="center">
     <br />
-    <a href="https://github.com/lukaflores/dotfiles/issues">Report Bug</a>
+    <a href="https://github.com/lukaflores/nt/issues">Report Bug</a>
     ·
-    <a href="https://github.com/lukaflores/dotfiles/issues">Request Feature</a>
+    <a href="https://github.com/lukaflores/nt/issues">Request Feature</a>
   </p>
 </div>
 
