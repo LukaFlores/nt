@@ -82,7 +82,22 @@ Example of the way I have structure my personal system
 ```
 
 
-Notes: When 
+Example of Assignment / Reading in the Compression Reading
+```
+CompressionReading
+     ├── source 
+     |    └── compressionReading.pdf 
+     ├── compresssionReading.tex
+     └── compressionReading.pdf
+```
+
+Note: When the script opens the directory it opens:
+  - the ".tex" file in `nvim`
+  - the ".pdf" file associate with ".tex" file in `Preview (Mac)` or `Zathura (Linux)`
+  - the ".pdf" or ".html" file in `/source` using `Preview (Mac)` or `Zathura (Linux)` or `qutebrowser (linux)`
+
+The note taking file can be change from ".tex" at the top of the file `fileType=""`
+The file opening commands can be change in `openFiles()` 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
