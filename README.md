@@ -14,14 +14,7 @@ O -->
   <p align="center"> 
     Terminal Note Organization Application 💻 
   </p>
-    <br />
-  <p align="center"> 
-    ![result](https://github.com/LukaFlores/nt/assets/85141937/b9a0e78b-eb14-434f-9cfd-7342c12426f7)
-    <br />
-    <img src="/resources/lazygit.png" alt="logo" width="700" height="450">
-    <br />
-  </p>
-
+    
   <p align="center">
     <br />
     <a href="https://github.com/lukaflores/dotfiles/issues">Report Bug</a>
@@ -30,6 +23,7 @@ O -->
   </p>
 </div>
 
+![result](https://github.com/LukaFlores/nt/assets/85141937/b9a0e78b-eb14-434f-9cfd-7342c12426f7)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
