@@ -39,6 +39,44 @@ Note: Before installing, please look through the code and understand. It will al
 
 At the top of the file there are changeable variables
 
+```
+fileType=".tex"
+subDir="agnDir" # Directory Containing Notes / Assignments for Specifc Application
+homeDirectory=~/notes/edu # Directory Containing all Applications of "nt"
+databaseTXT="completed-assignments.txt" # Name of File to Store Complete Assignments / Notes
+IPdatabaseTXT="inprogress-assignments.txt" # Name of File to Store Assignments / Notes that are In Progress
+```
+For example I currently have two commands for two different directories 
+``
+ag # Responsible for all School Assignment
+``
+``
+nt # Responsible for all Personal Study Notes
+``
+Example of the way I have structure my personal system
+```
+.
+└── notes
+    └── edu
+       ├── dir # Dirctory for Personal Notes
+       |    ├── Computer Science # Subject of Personal Study
+       |    |       └── Compresssion Reading # First Reading of Subject Computer Science
+       |    └── Philosphy # Second Subject of Personal Study
+       |            ├── Ethics Reading  # First Reading of Subject Philosphy
+       |            └── Metaphysics Reading # Second Reading of Subject Philosphy
+       |
+       ├── agnDir # Dirctory for School Assignments
+       |    ├── Discrete Math # Subject of School
+       |    |       └── Homework 1 # HW1 of Discrete Math 
+       |    └── English # Second Subject of School
+       |            ├── Essay 1  # First Assignment of Subject English
+       |            └── Essay 2  # Second Assignment of Subject English
+       |
+       ├── completed-assignments.txt # Name of File to Store Complete Assignments / Notes (Sub-Directory: agnDir)
+       ├── inprogress-assignments.txt # Name of File to Store Assignments / Notes that are In Progress (Sub-Directory: agnDir)
+       ├── completed-notes.txt # Name of File to Store Complete Assignments / Notes (Sub-Directory: dir)
+       └──  inprogress-notes.txt # Name of File to Store Assignments / Notes that are In Progress (Sub-Directory: dir)
+```
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
