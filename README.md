@@ -108,7 +108,7 @@ Notes: When
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Depending on the bin command associated with the file it as simple as calling it, in the video example above I use "ag" but within my dotfiles I also use nt for a different directory 
+Depending on the bin command associated with the file it as simple as calling it, in the video example above I use "ag" but within my dotfiles I also use "nt" for my personal notes directory 
 
 ```
   ag
