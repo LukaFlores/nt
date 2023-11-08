@@ -138,13 +138,5 @@ or
 
 Luka Flores - [@LukaFlores12](https://twitter.com/LukaFlores12)
 
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* Inspiration [Niki Nisi Dotfiles](https://github.com/nicknisi/dotfiles)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
