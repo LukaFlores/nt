@@ -2,19 +2,23 @@
 <a name="readme-top"></a>
 
 
-<!-- PROJECT LOGO -->
+<!-- PROJECT LOG
+
+
+
+O -->
 
 <div>
-  <h2 align="center">Dotfiles (README not up to date)</h2>
+  <h2 align="center">nt</h2>
   
   <p align="center"> 
-    My life inside the terminal 💻 
+    Terminal Note Organization Application 💻 
   </p>
     <br />
   <p align="center"> 
-    <img src="/resources/images/workspace.png" alt="Logo" width="700" height="450">
+    ![result](https://github.com/LukaFlores/nt/assets/85141937/b9a0e78b-eb14-434f-9cfd-7342c12426f7)
     <br />
-    <img src="/resources/images/lazygit.png" alt="logo" width="700" height="450">
+    <img src="/resources/lazygit.png" alt="logo" width="700" height="450">
     <br />
   </p>
 
