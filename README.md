@@ -72,13 +72,13 @@ Example of the way I have structure my personal system
      |            ├── Essay 1  # First Assignment of Subject English
      |            └── Essay 2  # Second Assignment of Subject English
      |
-     ├── completed-assignments.txt # Name of File to Store Complete Assignments / Notes (Sub-Directory: agnDir)
+     ├── completed-assignments.txt # To Store Complete Assignments (Sub-Directory: agnDir)
      |
-     ├── inprogress-assignments.txt # Name of File to Store Assignments / Notes that are In Progress (Sub-Directory: agnDir)
+     ├── inprogress-assignments.txt # To Store Assignments that are In Progress (Sub-Directory: agnDir)
      |
-     ├── completed-notes.txt # Name of File to Store Complete Assignments / Notes (Sub-Directory: dir)
+     ├── completed-notes.txt # To Store Complete Notes (Sub-Directory: dir)
      |
-     └── inprogress-notes.txt # Name of File to Store Assignments / Notes that are In Progress (Sub-Directory: dir)
+     └── inprogress-notes.txt # To Store Notes that are In Progress (Sub-Directory: dir)
 ```
 
 
