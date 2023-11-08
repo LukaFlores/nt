@@ -1,0 +1,305 @@
+#!/usr/bin/env bash
+# Study Session manager
+# Usage: ag
+
+workingDir=""
+workingFile=""
+globalIndex=""
+fileType=".tex"
+subDir="agnDir"
+homeDirectory=~/notes/edu
+databaseTXT="completed-assignments.txt"
+IPdatabaseTXT="inprogress-assignments.txt"
+re='^[0-9][0-9]*$'
+
+
+
+
+####### HELPER FUNCTIONS ########
+#
+
+createAssignment(){
+
+        title=$1
+        cd $workingDir 
+        lxf $title
+        cd ./$title
+
+        # Create Notes ASSIGNMENT FILE
+        nvim  $workingDir/$title/$title$fileType
+
+}
+
+openFiles(){
+    files=($(find $workingFile -maxdepth 1 -type f -name "*$fileType" -execdir echo '{}' ';'))
+
+    clear
+
+    for source in $files; do 
+            source=${source##.}
+
+            if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+                qutebrowser $workingFile/source/${source%.*}.html & zathura $workingFile/source/${source%.*}.pdf & zathura $workingFile/${source%.*}.pdf & nvim $workingFile/$source 
+            elif [[ "$OSTYPE" == "darwin"* ]]; then
+                open $workingFile/source/${source%.*}.html & open -a Preview $workingFile/source/${source%.*}.pdf &  open -a Preview $workingFile/${source%.*}.pdf & nvim $workingFile/${source##.}
+            else
+                echo "Error Identifying OS"
+            fi
+    done
+}
+
+
+showDirectory(){
+
+    # $1 - Directory e.g "agnDir"
+    # $2- Subject e.g "MATH42"
+    # $3 - Ask for Subject Index e.g 1 = true 0 = false
+
+    ASKSUB=$3
+    workingDir=$homeDirectory/$1
+    arrDir=($(ls -1 $workingDir))
+    DIRINDEX=$2
+    echostring=" SUBJECTS: "
+    assignmentStatus=" "
+
+
+    if ! [[ -z ${DIRINDEX} ]]; then 
+        workingDir=$homeDirectory/$1/${arrDir[DIRINDEX]} 
+        echostring=" ASSIGNMENTS OF ${arrDir[DIRINDEX]}: "
+        arrDir=($(ls -1 $workingDir))
+    fi
+
+    echo "$echostring"
+
+    for index in ${!arrDir[@]}; do
+        if ! [[ -z ${DIRINDEX} ]]; then 
+            inputfile="$workingDir/${arrDir[$index]}"
+            fileinput=$(sed "s/.*\($subDir\)/\1/g" <<< $inputfile)
+
+            if ! grep -Fxq "${fileinput}" $homeDirectory/$databaseTXT ; then
+
+                if ! grep -Fxq "${fileinput}" $homeDirectory/$IPdatabaseTXT ; then
+                    assignmentStatus="❌"
+                else
+                    assignmentStatus="🔶"
+                fi
+                else
+                assignmentStatus="✅"
+            fi
+        fi
+        echo  "      $assignmentStatus $index: ${arrDir[$index]} "
+    done
+
+
+    if [[ $ASKSUB == 1 ]]; then
+        if ! [[ -z ${DIRINDEX} ]]; then 
+            echo " Select a File: ";
+            read assignmentNumber
+
+            ## TODO: Make this one while loop
+            while ! [[ $assignmentNumber =~ $re ]]; do
+                echo "Error: Please Re-Enter a Input" 
+                echo "$assignmentNumber"
+                read assignmentNumber 
+            done
+
+            while ! [[ $assignmentNumber < $((index + 1)) ]]; do
+                echo "Error: Please Re-Enter a Input" 
+                echo "$assignmentNumber"
+                read assignmentNumber 
+            done
+
+            workingFile=$workingDir/${arrDir[assignmentNumber]}
+        fi
+    fi
+    
+    globalIndex=$index
+
+}
+
+showSubject(){
+
+    # $1 - Directory e.g "agnDir"
+    # $2 - Ask for Subject Index e.g 1 = true 0 = false
+    SUBJECTINDEX=$1
+    ASKSUB=$2
+
+    if [[ -z ${SUBJECTINDEX} ]]; then
+        showDirectory $subDir
+    else
+        showDirectory $subDir $SUBJECTINDEX $ASKSUB
+    fi
+}
+
+newAssignment(){
+    echo "Add New Assignment"
+    showSubject
+    echo " " 
+    echo "Select a Subject Index:" 
+    read subjectIndex 
+    showSubject "$subjectIndex" 0
+    echo " " 
+    echo "Select Title of Assignment:" 
+    read assignmentTitle 
+    createAssignment $assignmentTitle 
+    completed=1
+}
+
+completeAssignment(){
+    echo "Complete Assignment"
+    showSubject
+    echo " " 
+    echo "Select a Subject Index:" 
+    read subjectIndex 
+    echo " " 
+    showSubject "$subjectIndex" 1
+    echo "Select an Assignment to Complete" 
+    fileinput=$(sed "s/.*\($subDir\)/\1/g" <<< $workingFile)
+    echo "${fileinput}" >> $homeDirectory/$databaseTXT;
+    echo "Assignment Was Successfully Completed" 
+}
+
+inProgressAssignment(){
+    echo "Place Assignment in Progress"
+    showSubject
+    echo " " 
+    echo "Select a Subject Index:" 
+    read subjectIndex 
+    echo " " 
+    showSubject "$subjectIndex" 1
+    echo "Select an Assignment to Complete" 
+    fileinput=$(sed "s/.*\($subDir\)/\1/g" <<< $workingFile)
+    echo "${fileinput}" >> $homeDirectory/$IPdatabaseTXT;
+    echo "Assignment Was Successfully place in progress" 
+}
+
+ProgressBar(){
+    files=($(find $homeDirectory/$subDir -maxdepth 3 -type f -name "*$fileType" -execdir echo '{}' ';'))
+    numCompleted=$(wc -l < $homeDirectory/$databaseTXT)
+    totalAgn=${#files[@]}
+    percent=$(awk "BEGIN { pc=100*${numCompleted}/${totalAgn}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
+    tens=$(($percent/10))
+
+    if [[ $(($percent%10)) > 5 ]]; then
+        ((tens+=1)) 
+    fi
+
+    echo -n "======= Completed:   "
+
+    for ((i = 0; i < 10; i++)); do
+        if [[ (($i < $tens)) ]]; then
+            echo -n "🟩"
+        else
+            echo -n "⬜️"
+        fi
+    done
+    ratioValue="${numCompleted//[[:blank:]]/}/$totalAgn : $percent %"
+    digitCount=${#ratioValue}
+
+    echo -n "    ($ratioValue)    "
+
+    for ((i = 0; i < 25 - $digitCount; i++)); do
+        echo -n "="
+    done
+}
+
+InProgressBar(){
+    files=($(find $homeDirectory/$subDir -maxdepth 3 -type f -name "*$fileType" -execdir echo '{}' ';'))
+    numCompleted=$(wc -l < $homeDirectory/$databaseTXT)
+    numInProgress=$(wc -l < $homeDirectory/$IPdatabaseTXT)
+    totalAgn=${#files[@]}
+    numUncompleted=$((totalAgn - numCompleted))
+    percent=$(awk "BEGIN { pc=100*${numInProgress}/${numUncompleted}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
+    tens=$(($percent/10))
+
+    if [[ $(($percent%10)) > 5 ]]; then
+        ((tens+=1)) 
+    fi
+
+    echo -n "===== In Progress:   "
+
+    for ((i = 0; i < 10; i++)); do
+        if [[ (($i < $tens)) ]]; then
+            echo -n "🟨"
+        else
+            echo -n "⬜️"
+        fi
+    done
+    ratioValue="${numInProgress//[[:blank:]]/}/$numUncompleted : $percent %"
+    digitCount=${#ratioValue}
+
+    echo -n "    ($ratioValue)    "
+
+    for ((i = 0; i < 25 - $digitCount; i++)); do
+        echo -n "="
+    done
+}
+
+
+######## START OF SCRIPT ######## 
+
+
+echo "============================================================================"
+echo " " 
+echo "      n: Add New Assignment"
+echo "      c: Complete Assignment"
+echo "      i: Place Assignment in Progress "
+echo " " 
+echo "============================================================================"
+echo " " 
+
+showSubject
+
+echo " "
+echo "============================================================================"
+InProgressBar
+echo " " 
+echo "============================================================================"
+ProgressBar
+echo " "
+echo "============================================================================"
+echo " "
+echo "Enter Character Associated with Command: "
+
+completed=0
+while [[ $completed == 0 ]]; do 
+
+    read number
+    
+    if [[ $number == "n" ]]; then
+        clear
+        newAssignment
+        completed=1
+        break
+    fi
+    
+    if [[ $number == "c" ]]; then
+        clear
+        completeAssignment
+        completed=1
+        break
+    fi
+
+    if [[ $number == "i" ]]; then
+        clear
+        inProgressAssignment
+        completed=1
+        break
+    fi
+
+    if [[ $number =~ $re ]]; then
+        clear
+        if [[ $number < $((globalIndex + 1)) ]]; then
+            showSubject "$number" 1
+            openFiles
+            completed=1
+            break
+        fi
+    fi
+    
+    if [[ $completed == 0 ]]; then 
+        echo "Error: Please Re-Enter a Input" 
+    fi 
+done
+
+
