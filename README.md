@@ -21,10 +21,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Dotfiles are highly personalized to the individual. I encourage anyone who is starting the process of creating dotfiles to find inspiration in the others whilst starting from scratch. 
+This project is a system to organize my latex notes and assigments for school and personal study. The tool allows me to open notes quickly as well as track completion of assignments.
 
-Note: Before installing, please look through the code and understand. It will alter prexisting configurations.
+- ❌ represents that the assignment hasn't been started
+- 🔶 represents that the assignment has been started
+- ✅ represents that the assignment has been completed
 
+Note: Current version has not been updated to be compatible with linux (works with MacOS)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
